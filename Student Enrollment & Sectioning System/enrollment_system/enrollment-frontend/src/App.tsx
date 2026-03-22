@@ -35,25 +35,70 @@ function Layout() {
         body { -webkit-font-smoothing: antialiased; }
       `}</style>
 
-      <header style={{ background: "#ffffff", borderBottom: "1px solid #dcdfe4" }} className="px-8 py-4 flex items-center justify-between">
+      {/* ✅ IMPROVED HEADER */}
+      <header
+        style={{
+          background: "#ffffff",
+          borderBottom: "1px solid #dcdfe4",
+        }}
+        className="px-8 py-4 flex items-center justify-between"
+      >
         <div className="flex items-center gap-4">
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden" style={{ color: "#6b7280" }}>
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden"
+            style={{ color: "#6b7280" }}
+          >
             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" />
             </svg>
           </button>
-          <span style={{ fontFamily: "'Lora', serif", fontSize: "1.1rem", fontWeight: 600, color: "#111827" }}>
-            Enrollment System
-          </span>
+
+          <div>
+            <span
+              style={{
+                fontFamily: "'Lora', serif",
+                fontSize: "1.15rem",
+                fontWeight: 600,
+                color: "#111827",
+                display: "block",
+              }}
+            >
+              Enrollment System
+            </span>
+            <span
+              style={{
+                fontSize: "0.75rem",
+                color: "#6b7280",
+              }}
+            >
+              Student Management Dashboard
+            </span>
+          </div>
         </div>
-        <span style={{ fontSize: "0.85rem", color: "#6b7280", fontWeight: 500 }} className="hidden sm:block">
-          {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+
+        <span
+          style={{
+            fontSize: "0.85rem",
+            color: "#6b7280",
+            fontWeight: 500,
+          }}
+          className="hidden sm:block"
+        >
+          {new Date().toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
         </span>
       </header>
 
       <div className="flex flex-1">
         {mobileOpen && (
-          <div className="fixed inset-0 z-20 bg-black bg-opacity-20 md:hidden" onClick={() => setMobileOpen(false)} />
+          <div
+            className="fixed inset-0 z-20 bg-black bg-opacity-20 md:hidden"
+            onClick={() => setMobileOpen(false)}
+          />
         )}
 
         <aside
@@ -65,7 +110,16 @@ function Layout() {
             md:translate-x-0 md:static md:z-auto md:pt-8
           `}
         >
-          <p style={{ fontSize: "0.7rem", fontWeight: 600, color: "#9ca3af", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: "0.625rem" }}>
+          <p
+            style={{
+              fontSize: "0.7rem",
+              fontWeight: 600,
+              color: "#9ca3af",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              marginBottom: "0.625rem",
+            }}
+          >
             Navigation
           </p>
 
@@ -105,10 +159,38 @@ function Layout() {
         </aside>
 
         <main className="flex-1 min-w-0" style={{ padding: "2.5rem 3rem" }}>
-          <div style={{ marginBottom: "2rem", paddingBottom: "1.25rem", borderBottom: "1px solid #e5e7eb" }}>
-            <h2 style={{ fontFamily: "'Lora', serif", fontSize: "1.6rem", fontWeight: 600, color: "#111827" }}>
+          {/* ✅ IMPROVED PAGE TITLE */}
+          <div
+            style={{
+              marginBottom: "2rem",
+              paddingBottom: "1.25rem",
+              borderBottom: "1px solid #e5e7eb",
+            }}
+          >
+            <h2
+              style={{
+                fontFamily: "'Lora', serif",
+                fontSize: "1.6rem",
+                fontWeight: 600,
+                color: "#111827",
+                marginBottom: "0.25rem",
+              }}
+            >
               {current?.label ?? ""}
             </h2>
+
+            <p
+              style={{
+                fontSize: "0.85rem",
+                color: "#6b7280",
+              }}
+            >
+              {current?.label === "Dashboard" && "Overview of system activity and statistics"}
+              {current?.label === "Students" && "Manage student records and information"}
+              {current?.label === "Subjects" && "View and organize subject offerings"}
+              {current?.label === "Sections" && "Handle class sections and schedules"}
+              {current?.label === "Enrollments" && "Track and manage student enrollments"}
+            </p>
           </div>
 
           <div style={{ maxWidth: "900px" }}>
