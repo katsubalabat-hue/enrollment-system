@@ -8,10 +8,10 @@ import Enrollments from "./pages/Enrollments";
 
 const navItems = [
   { to: "/", label: "Dashboard" },
-  { to: "/students", label: "Students" },
-  { to: "/subjects", label: "Subjects" },
-  { to: "/sections", label: "Sections" },
-  { to: "/enrollments", label: "Enrollments" },
+  { to: "/students", label: "Products" }, // renamed visually only
+  { to: "/subjects", label: "Brands" },
+  { to: "/sections", label: "Categories" },
+  { to: "/enrollments", label: "Orders" },
 ];
 
 function Layout() {
@@ -22,69 +22,29 @@ function Layout() {
   );
 
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{
-        background: "#eef1f6",
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap');
-        * { box-sizing: border-box; }
-        body { -webkit-font-smoothing: antialiased; }
-      `}</style>
-
-      {/* ✅ IMPROVED HEADER */}
-      <header
-        style={{
-          background: "#ffffff",
-          borderBottom: "1px solid #dcdfe4",
-        }}
-        className="px-8 py-4 flex items-center justify-between"
-      >
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-100 to-gray-200 font-inter">
+      
+      {/* HEADER */}
+      <header className="px-8 py-4 flex items-center justify-between bg-white/80 backdrop-blur shadow-sm border-b">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden"
-            style={{ color: "#6b7280" }}
+            className="md:hidden text-gray-500"
           >
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" />
-            </svg>
+            ☰
           </button>
 
           <div>
-            <span
-              style={{
-                fontFamily: "'Lora', serif",
-                fontSize: "1.15rem",
-                fontWeight: 600,
-                color: "#111827",
-                display: "block",
-              }}
-            >
-              Enrollment System
-            </span>
-            <span
-              style={{
-                fontSize: "0.75rem",
-                color: "#6b7280",
-              }}
-            >
-              Student Management Dashboard
-            </span>
+            <h1 className="text-lg font-semibold text-gray-900 tracking-tight">
+              PhoneStore Admin
+            </h1>
+            <p className="text-xs text-gray-500">
+              Manage products, orders & inventory
+            </p>
           </div>
         </div>
 
-        <span
-          style={{
-            fontSize: "0.85rem",
-            color: "#6b7280",
-            fontWeight: 500,
-          }}
-          className="hidden sm:block"
-        >
+        <span className="text-sm text-gray-500 hidden sm:block">
           {new Date().toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
@@ -94,63 +54,44 @@ function Layout() {
       </header>
 
       <div className="flex flex-1">
+        
+        {/* OVERLAY */}
         {mobileOpen && (
           <div
-            className="fixed inset-0 z-20 bg-black bg-opacity-20 md:hidden"
+            className="fixed inset-0 bg-black/30 z-20 md:hidden"
             onClick={() => setMobileOpen(false)}
           />
         )}
 
+        {/* SIDEBAR */}
         <aside
-          style={{ background: "#ffffff", borderRight: "1px solid #e5e7eb" }}
           className={`
-            fixed top-0 left-0 h-full z-30 w-52 pt-20 px-5 pb-8 flex flex-col
-            transition-transform duration-200
-            ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
-            md:translate-x-0 md:static md:z-auto md:pt-8
+            fixed md:static top-0 left-0 h-full w-60 z-30
+            bg-white shadow-lg md:shadow-none
+            px-5 pt-20 md:pt-8 pb-8
+            transform transition-transform duration-200
+            ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
           `}
         >
-          <p
-            style={{
-              fontSize: "0.7rem",
-              fontWeight: 600,
-              color: "#9ca3af",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: "0.625rem",
-            }}
-          >
-            Navigation
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">
+            Menu
           </p>
 
-          <nav className="flex flex-col gap-1">
+          <nav className="flex flex-col gap-2">
             {navItems.map(({ to, label }) => (
               <NavLink
                 key={to}
                 to={to}
                 end={to === "/"}
                 onClick={() => setMobileOpen(false)}
-                style={({ isActive }) => ({
-                  display: "block",
-                  padding: "0.55rem 0.75rem",
-                  borderRadius: "0.375rem",
-                  fontSize: "0.9rem",
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? "#2563eb" : "#4b5563",
-                  background: isActive ? "#e0ecff" : "transparent",
-                  borderLeft: isActive ? "3px solid #2563eb" : "3px solid transparent",
-                  transition: "all 0.2s",
-                })}
-                onMouseEnter={(e) => {
-                  if (!e.currentTarget.classList.contains("active")) {
-                    e.currentTarget.style.background = "#f3f4f6";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!e.currentTarget.classList.contains("active")) {
-                    e.currentTarget.style.background = "transparent";
-                  }
-                }}
+                className={({ isActive }) =>
+                  `
+                  px-3 py-2 rounded-lg text-sm transition-all
+                  ${isActive
+                    ? "bg-blue-100 text-blue-600 font-semibold shadow-sm"
+                    : "text-gray-600 hover:bg-gray-100"}
+                  `
+                }
               >
                 {label}
               </NavLink>
@@ -158,42 +99,25 @@ function Layout() {
           </nav>
         </aside>
 
-        <main className="flex-1 min-w-0" style={{ padding: "2.5rem 3rem" }}>
-          {/* ✅ IMPROVED PAGE TITLE */}
-          <div
-            style={{
-              marginBottom: "2rem",
-              paddingBottom: "1.25rem",
-              borderBottom: "1px solid #e5e7eb",
-            }}
-          >
-            <h2
-              style={{
-                fontFamily: "'Lora', serif",
-                fontSize: "1.6rem",
-                fontWeight: 600,
-                color: "#111827",
-                marginBottom: "0.25rem",
-              }}
-            >
-              {current?.label ?? ""}
+        {/* MAIN */}
+        <main className="flex-1 p-6 md:p-10">
+          
+          {/* PAGE HEADER */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900">
+              {current?.label}
             </h2>
-
-            <p
-              style={{
-                fontSize: "0.85rem",
-                color: "#6b7280",
-              }}
-            >
-              {current?.label === "Dashboard" && "Overview of system activity and statistics"}
-              {current?.label === "Students" && "Manage student records and information"}
-              {current?.label === "Subjects" && "View and organize subject offerings"}
-              {current?.label === "Sections" && "Handle class sections and schedules"}
-              {current?.label === "Enrollments" && "Track and manage student enrollments"}
+            <p className="text-sm text-gray-500 mt-1">
+              {current?.label === "Dashboard" && "Overview of store performance"}
+              {current?.label === "Products" && "Manage phone listings and inventory"}
+              {current?.label === "Brands" && "Organize phone brands"}
+              {current?.label === "Categories" && "Group products by type"}
+              {current?.label === "Orders" && "Track customer purchases"}
             </p>
           </div>
 
-          <div style={{ maxWidth: "900px" }}>
+          {/* CONTENT CARD */}
+          <div className="bg-white rounded-2xl shadow-sm border p-6">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/students" element={<Students />} />
